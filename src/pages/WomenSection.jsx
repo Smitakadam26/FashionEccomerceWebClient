@@ -1,0 +1,195 @@
+import { useState, useEffect } from "react";
+import {
+  Box,
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  Button,
+  IconButton,
+  List,
+  ListItemButton,
+  ListItemText,
+} from "@mui/material";
+
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import Header from "../components/Header";
+import { getAllProductsWomenSection } from "../services/api";
+import banner5 from "../assests/images/banner5.png"
+
+
+/* ---------------- COMPONENT ---------------- */
+export default function WomenSection() {
+  const [products, setProducts] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [hovered, setHovered] = useState(false);
+  const [wishlist, setWishlist] = useState(
+    JSON.parse(localStorage.getItem("wishlist")) || []
+  );
+
+  /* ---------- SAVE WISHLIST ---------- */
+  useEffect(() => {
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+    getAllProductsWomenSection().then(setProducts);
+    
+  }, [wishlist]);
+
+  /* ---------- FILTER PRODUCTS ---------- */
+  const filteredProducts =
+    selectedCategory === "all"
+      ? products
+      : products.filter((p) => p.type === selectedCategory);
+
+  /* ---------- TOGGLE WISHLIST ---------- */
+  const toggleWishlist = (product) => {
+    const exists = wishlist.find((item) => item._id === product._id);
+    exists
+      ? setWishlist(wishlist.filter((item) => item._id !== product._id))
+      : setWishlist([...wishlist, product]);
+  };
+
+  return (
+    <>
+      <Header />
+      <Box sx={{ display: "flex", minHeight: "100vh" }}>
+        {/* Sidebar */}
+        <Box
+          sx={{
+            width: 280,
+            flexShrink: 0,
+            borderRight: "1px solid #eee",
+            position: "sticky",
+            top: 0,
+            height: "100vh",
+            overflowY: "auto",
+            backgroundColor: "#fff",
+            p: 2
+          }}
+        >
+          <Typography variant="h6" mb={2}>
+            Women Categories
+          </Typography>
+
+          <List>
+            {[
+              { label: "All", value: "all" },
+              { label: "Clothing", value: "clothing" },
+              { label: "Footwear", value: "footwear" },
+              { label: "Beauty", value: "beauty" },
+              { label: "Jwellery", value: "jwellery" },
+              { label: "Bag", value: "bag" }
+            ].map((cat) => (
+              <ListItemButton
+                key={cat.value}
+                selected={selectedCategory === cat.value}
+                onClick={() => setSelectedCategory(cat.value)}
+                sx={{ borderRadius: 1 }}
+              >
+                <ListItemText primary={cat.label} />
+              </ListItemButton>
+            ))}
+          </List>
+
+          {/* Banners */}
+          <Box mt={3}>
+            <Box
+              component="img"
+              src={banner5}
+              alt="banner"
+              sx={{
+                width: "100%",
+                height: "auto",
+                borderRadius: 2,
+                mb: 2
+              }}
+            />
+          </Box>
+        </Box>
+
+        {/* Products Section */}
+        <Box sx={{ flex: 1, overflowY: "auto" ,p:4}}>
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", md: "repeat(3, 1fr)" },
+              gap: 3
+            }}
+          >
+            {filteredProducts.map((product, index) => {
+              const isWishlisted = wishlist.some((item) => item._id === product._id);
+              return (
+                <Card
+                  key={product.id}
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    borderRadius: 3,
+                    boxShadow: 3,
+                    transition: "0.3s",
+                    position: "relative",
+                    height: "100%"
+                  }}
+                  onMouseEnter={() => setHovered(index)}
+                  onMouseLeave={() => setHovered(null)}
+                >
+                  {/* Wishlist */}
+                  <IconButton
+                    onClick={() => toggleWishlist(product)}
+                    sx={{
+                      position: "absolute",
+                      top: 10,
+                      right: 10,
+                      backgroundColor: "white",
+                      zIndex: 1
+                    }}
+                  >
+                    {isWishlisted ? (
+                      <FavoriteIcon color="error" />
+                    ) : (
+                      <FavoriteBorderIcon />
+                    )}
+                  </IconButton>
+
+                  {/* Product Image */}
+                  <CardMedia
+                    component="img"
+                    height={200}
+                    image={hovered === index && product.images[1] ? product.images[1] : product.images[0]}
+                    alt={product.name}
+                    sx={{
+                      objectFit: "contain",
+                      backgroundColor: "white"
+                    }}
+                  />
+
+                  {/* Product Details */}
+                  <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography
+                      fontWeight={600}
+                      sx={{
+                        display: "-webkit-box",
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: "vertical",
+                        overflow: "hidden",
+                        wordBreak: "break-word",
+                        minHeight: "3em"
+                      }}
+                    >
+                      {product.name}
+                    </Typography>
+                    <Typography color="text.secondary">{`$${product.price}`}</Typography>
+                  </CardContent>
+
+                  <Button fullWidth variant="contained" size="small" sx={{ borderRadius: 0 }}>
+                    Add to Cart
+                  </Button>
+                </Card>
+              );
+            })}
+          </Box>
+        </Box>
+      </Box>
+    </>
+  );
+}
