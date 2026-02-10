@@ -1,23 +1,23 @@
 export const getAllProductsWomenSection = async () => {
-  const res = await fetch("http://localhost:5000/product?category=women");
+  const res = await fetch("https://fashion-eccomerce-web-server.vercel.app/product?category=women");
   return res.json();
 };
 export const getAllProductsMenSection = async () => {
-  const res = await fetch("http://localhost:5000/product?category=men");
+  const res = await fetch("https://fashion-eccomerce-web-server.vercel.app/product?category=men");
   return res.json();
 };
 export const getAllProductsKidSection = async () => {
-  const res = await fetch("http://localhost:5000/product?category=kid");
+  const res = await fetch("https://fashion-eccomerce-web-server.vercel.app/product?category=kid");
   return res.json();
 };
 export const getAllProducts = async () => {
-  const res = await fetch("http://localhost:5000/product/All");
+  const res = await fetch("https://fashion-eccomerce-web-server.vercel.app/product/All");
   return res.json();
 };
 export const getProfile = async () => {
   const data = JSON.parse(localStorage.getItem("user"));
   console.log(data.token)
-  const res = await fetch("http://localhost:5000/users/profile", {
+  const res = await fetch("https://fashion-eccomerce-web-server.vercel.app/users/profile", {
     headers: {
       Authorization: `Bearer ${data.token}`
     }
@@ -28,7 +28,7 @@ export const getProfile = async () => {
 export const updateProfile = async (formData) => {
   const data = JSON.parse(localStorage.getItem("user"));
 
-  const res = await fetch("http://localhost:5000/users/profile", {
+  const res = await fetch("https://fashion-eccomerce-web-server.vercel.app/users/profile", {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${data.token}`,
@@ -41,7 +41,7 @@ export const updateProfile = async (formData) => {
 export const updateProduct = async (id, formData) => {
   const data = JSON.parse(localStorage.getItem("user"));
 
-  const res = await fetch(`http://localhost:5000/product/${id}`, {
+  const res = await fetch(`https://fashion-eccomerce-web-server.vercel.app/product/${id}`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${data.token}`, 
@@ -52,7 +52,7 @@ export const updateProduct = async (id, formData) => {
   return res.json();
 };
 export const getProductById = async (id) => {
-  const res = await fetch(`http://localhost:5000/product/${id}`);
+  const res = await fetch(`https://fashion-eccomerce-web-server.vercel.app/product/${id}`);
   return res.json();
 };
 

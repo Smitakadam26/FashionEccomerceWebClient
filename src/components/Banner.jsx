@@ -23,7 +23,7 @@ export default function Banner() {
       setActiveStep((prev) => (prev + 1) % maxSteps);
     }, 4000); 
     return () => clearInterval(timer);
-  }, []);
+  }, [maxSteps]);
 
   const handleNext = () => setActiveStep((prev) => (prev + 1) % maxSteps);
   const handleBack = () => setActiveStep((prev) => (prev - 1 + maxSteps) % maxSteps);

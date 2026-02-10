@@ -44,7 +44,7 @@ export default function AddProduct() {
 
     const data = JSON.parse(localStorage.getItem("user"));
 
-    await fetch("http://localhost:5000/product/add", {
+    await fetch("https://fashion-eccomerce-web-server.vercel.app/product/add", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${data.token}`,
