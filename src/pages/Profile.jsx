@@ -1,23 +1,6 @@
 import { useState, useEffect } from "react";
-import {
-  Box,
-  Grid,
-  Avatar,
-  Typography,
-  List,
-  ListItemButton,
-  ListItemText,
-  Card,
-  CardContent,
-  Button,
-  Divider,
-  IconButton,
-  CardMedia
-} from "@mui/material";
-import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
-import Logo from "../assests/images/logo2.png";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import {Box,Grid,Avatar,Typography,Card,CardContent,Button,Divider,IconButton,
+        Drawer,useMediaQuery} from "@mui/material";
 import { getProfile } from '../services/api';
 import EditProfile from "./EditProfile";
 import EmailIcon from '@mui/icons-material/Email';
@@ -25,9 +8,14 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import WcIcon from '@mui/icons-material/Wc';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import EditIcon from "@mui/icons-material/Edit";
+import Products from "../components/Products";
+import MenuIcon from "@mui/icons-material/Menu";
+import { useTheme } from "@mui/material/styles";
+import Sidebar from "../components/Sidebar";
+
 function InfoRow({ icon, label, value }) {
   return (
-    <Grid item xs={12} sm={6}>
+    <Grid xs={12} sm={6}>
       <Box sx={{ display: "flex", gap: 1.5, alignItems: "center" }}>
         <Box sx={{ color: "primary.main" }}>{icon}</Box>
         <Box>
@@ -44,75 +32,67 @@ function InfoRow({ icon, label, value }) {
 }
 function Orders() {
   return (
-    <Card sx={{ borderRadius: 3 }}>
-      <CardContent>
-        <Typography variant="h6" mb={2}>My Orders</Typography>
+    <Box>
+      <Typography variant="h6" mb={2}>My Orders</Typography>
 
-        <Card sx={{ mb: 2 }}>
-          <CardContent>
-            <Typography>Order </Typography>
-            <Typography color="text.secondary">
-              Status: Delivered
-            </Typography>
-            <Button size="small" sx={{ mt: 1 }}>View Details</Button>
-          </CardContent>
-        </Card>
+      <Card sx={{ mb: 2 }}>
+        <CardContent>
+          <Typography>Order </Typography>
+          <Typography color="text.secondary">
+            Status: Delivered
+          </Typography>
+          <Button size="small" sx={{ mt: 1 }}>View Details</Button>
+        </CardContent>
+      </Card>
 
-        <Card>
-          <CardContent>
-            <Typography>Order </Typography>
-            <Typography color="text.secondary">
-              Status: Shipped
-            </Typography>
-            <Button size="small" sx={{ mt: 1 }}>View Details</Button>
-          </CardContent>
-        </Card>
+      <Card>
+        <CardContent>
+          <Typography>Order </Typography>
+          <Typography color="text.secondary">
+            Status: Shipped
+          </Typography>
+          <Button size="small" sx={{ mt: 1 }}>View Details</Button>
+        </CardContent>
+      </Card>
 
-      </CardContent>
-    </Card>
+    </Box>
   );
 }
 function Addresses() {
   return (
-    <Card sx={{ borderRadius: 3 }}>
-      <CardContent>
-        <Typography variant="h6" mb={2}>Saved Addresses</Typography>
+    <Box>
+      <Typography variant="h6" mb={2}>Saved Addresses</Typography>
 
-        <Card sx={{ mb: 2 }}>
-          <CardContent>
-            <Typography>Home</Typography>
-            <Typography color="text.secondary">
-              221B Baker Street, London
-            </Typography>
-            <Button size="small" sx={{ mt: 1 }}>Edit</Button>
-          </CardContent>
-        </Card>
-
-        <Button variant="contained">Add New Address</Button>
-      </CardContent>
-    </Card>
+      <Card sx={{ mb: 2 }}>
+        <CardContent>
+          <Typography>Home</Typography>
+          <Typography color="text.secondary">
+            221B Baker Street, London
+          </Typography>
+          <Button size="small" sx={{ mt: 1 }}>Edit</Button>
+        </CardContent>
+      </Card>
+      <Button variant="contained">Add New Address</Button>
+    </Box>
   );
 }
 function Security() {
   return (
-    <Card sx={{ borderRadius: 3 }}>
-      <CardContent>
-        <Typography variant="h6" mb={2}>Security Settings</Typography>
+    <Box>
+      <Typography variant="h6" mb={2}>Security Settings</Typography>
 
-        <Typography>Email Verified ✔</Typography>
+      <Typography>Email Verified ✔</Typography>
 
-        <Button variant="outlined" sx={{ mt: 2 }}>
-          Change Password
-        </Button>
-      </CardContent>
-    </Card>
+      <Button variant="outlined" sx={{ mt: 2 }}>
+        Change Password
+      </Button>
+    </Box>
   );
 }
 function WishList() {
   const [wishlist, setWishlist] = useState(
     JSON.parse(localStorage.getItem("wishlist")) || []
   );
-
   useEffect(() => {
     localStorage.setItem("wishlist", JSON.stringify(wishlist));
   }, [wishlist]);
@@ -124,78 +104,19 @@ function WishList() {
   };
   const [hovered, setHovered] = useState(false);
   return (
-    <Card sx={{ borderRadius: 3 }}>
-      <CardContent>
-        <Typography variant="h6" mb={2}>
-          Wishlist
-        </Typography>
+    <Box>
+      <Typography variant="h6" mb={2}>
+        Wishlist
+      </Typography>
 
-        <Grid container spacing={2}>
-          {wishlist.map((product, index) => (
-            <Grid item xs={12} sm={6} md={4} key={product._id}>
-              <Card
-                sx={{
-                  borderRadius: 3,
-                  boxShadow: 3,
-                  position: "relative",
-                  transition: "0.3s",
-                  "&:hover": {
-                    boxShadow: 6,
-                    transform: "translateY(-4px)"
-                  }
-                }}
-                onMouseEnter={() => setHovered(index)}
-                onMouseLeave={() => setHovered(null)}
-              >
-                <IconButton
-                  onClick={() => toggleWishlist(product)}
-                  sx={{
-                    position: "absolute",
-                    top: 10,
-                    right: 10,
-                    backgroundColor: "white",
-                    zIndex: 1
-                  }}
-                >
-                  <FavoriteIcon color="error" />
-
-                </IconButton>
-
-                <CardMedia
-                  component="img"
-                  height={200}
-                  image={hovered === index && product.images[1] ? product.images[1] : product.images[0]}
-                  alt={product.name}
-                  sx={{
-                    objectFit: "contain",
-                    backgroundColor: "white"
-                  }}
-                />
-
-                <CardContent>
-                  <Typography fontWeight={600}>
-                    {product.name}
-                  </Typography>
-                  <Typography color="text.secondary">
-                    {product.price}
-                  </Typography>
-
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    size="small"
-                    sx={{ mt: 1 }}
-                  >
-                    Add to Cart
-                  </Button>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-
-      </CardContent>
-    </Card>
+      <Products
+        setHovered={setHovered}
+        toggleWishlist={toggleWishlist}
+        hovered={hovered}
+        filteredProducts={wishlist}
+        wishlist={wishlist}
+      />
+    </Box>
   );
 }
 function AccountInfo({ profile, onEdit }) {
@@ -225,7 +146,7 @@ function AccountInfo({ profile, onEdit }) {
           }}
         >
           <Avatar
-            src={profile.avatar}  
+            src={profile.avatar}
             sx={{
               width: 70,
               height: 70,
@@ -281,118 +202,85 @@ function AccountInfo({ profile, onEdit }) {
 
 export default function Profile() {
   const [activeTab, setActiveTab] = useState("accountInfo");
-  const { logout } = useAuth();
-  const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
   const [editMode, setEditMode] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   useEffect(() => {
     getProfile().then((data) => {
-      console.log("Profile set:", data);
       setProfile(data);
     });
   }, []);
-  const handleLogout = () => {
-    logout();
-    navigate('/');
-  }
 
   return (
-    <Box sx={{ p: 4, minHeight: "100vh" }}>
-      <Grid container spacing={3}>
+        <Box sx={{ p: 4, minHeight: "100vh", display: "flex", gap: 3 }}>
 
-        <Grid item xs={12} md={3}>
-          <Box sx={{ minWidth: 140 }}>
-            <img src={Logo} alt="logo" height={100} />
-          </Box>
-          <Card
-            sx={{
-              borderRadius: 3,
-              background: "#f9e5e5ff",
-              position: "sticky",
-              top: 90
-            }}
-          >
-            <CardContent sx={{ textAlign: "center" }}>
-              <Avatar
-                sx={{
-                  width: 80,
-                  height: 80,
-                  margin: "auto",
-                  mb: 2,
-                  bgcolor: "primary.main"
-                }}
-              >
-                {profile?.name?.[0]}
-              </Avatar>
+      {isMobile && (
+        <IconButton
+          onClick={() => setMobileOpen(true)}
+          sx={{ position: "fixed", top: 40, right: 40, zIndex: 1200 }}
+        >
+          <MenuIcon />
+        </IconButton>
+      )}
 
-              <Typography variant="h6">{profile?.name}</Typography>
-
-            </CardContent>
-
-            <Divider />
-
-            <List>
-              <ListItemButton onClick={() => setActiveTab("accountInfo")}>
-                <ListItemText primary="Account" />
-              </ListItemButton>
-
-              <ListItemButton onClick={() => setActiveTab("orders")}>
-                <ListItemText primary="My Orders" />
-              </ListItemButton>
-
-              <ListItemButton onClick={() => setActiveTab("wishList")}>
-                <ListItemText primary="Wishlist ❤️" />
-              </ListItemButton>
-
-              <ListItemButton onClick={() => setActiveTab("address")}>
-                <ListItemText primary="Addresses" />
-              </ListItemButton>
-
-              <ListItemButton onClick={() => setActiveTab("security")}>
-                <ListItemText primary="Security" />
-              </ListItemButton>
-
-              <Divider sx={{ my: 1 }} />
-
-              <ListItemButton onClick={handleLogout}>
-                <ListItemText primary="Logout" />
-              </ListItemButton>
-            </List>
-          </Card>
-        </Grid>
-
-        <Grid item
-          xs={12}
-          md={9}
+      {!isMobile && (
+        <Box
           sx={{
-            backgroundColor: "#f9e5e5ff",
-            borderRadius: 3,
-            p: 2
-          }}>
-          {activeTab === "accountInfo" && !editMode && (
-            <AccountInfo
-              profile={profile}
-              onEdit={() => setEditMode(true)}
-            />
-          )}
+            width: "25%",
+            alignSelf: "flex-start",
+            position: "sticky",
+            top: 20,
+          }}
+        >
+          <Sidebar setActiveTab={setActiveTab} setMobileOpen={setMobileOpen}/>
+        </Box>
+      )}
 
-          {activeTab === "accountInfo" && editMode && (
-            <EditProfile
-              profile={profile}
-              onCancel={() => setEditMode(false)}
-              onSave={(updatedUser) => {
-                setProfile(updatedUser);
-                setEditMode(false);
-              }}
-            />
-          )}
-          {activeTab === "orders" && <Orders />}
-          {activeTab === "address" && <Addresses />}
-          {activeTab === "security" && <Security />}
-          {activeTab === "wishList" && <WishList />}
-        </Grid>
+      <Drawer
+        anchor="left"
+        open={mobileOpen}
+        onClose={() => setMobileOpen(false)}
+      >
+        <Box sx={{ width: 250, p: 2 }}>
+          <Sidebar setActiveTab={setActiveTab} setMobileOpen={setMobileOpen}/>
+        </Box>
+      </Drawer>
 
-      </Grid>
+      <Box
+        sx={{
+          width: { xs: "100%", md: "75%" },
+          backgroundColor: "#f9e5e5ff",
+          borderRadius: 3,
+          p: 2
+        }}
+      >
+        {activeTab === "accountInfo" && !editMode && (
+          <AccountInfo
+            profile={profile}
+            onEdit={() => setEditMode(true)}
+          />
+        )}
+
+        {activeTab === "accountInfo" && editMode && (
+          <EditProfile
+            profile={profile}
+            onCancel={() => setEditMode(false)}
+            onSave={(updatedUser) => {
+              setProfile(updatedUser);
+              setEditMode(false);
+            }}
+          />
+        )}
+        {activeTab === "orders" && <Orders />}
+        {activeTab === "address" && <Addresses />}
+        {activeTab === "security" && <Security />}
+        {activeTab === "wishList" && <WishList />}
+
+      </Box>
+
     </Box>
   );
 }

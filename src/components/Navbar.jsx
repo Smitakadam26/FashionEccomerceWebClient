@@ -7,11 +7,9 @@ import {
   MenuItem,
   Box,
   Stack,
-  Typography,
   Container
 } from '@mui/material';
 import ListOutlinedIcon from '@mui/icons-material/ListOutlined';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 export default function ResponsiveNavbar() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -51,10 +49,8 @@ export default function ResponsiveNavbar() {
           >
             <Button
               startIcon={<ListOutlinedIcon />}
-              endIcon={<KeyboardArrowDownIcon />}
               onClick={handleOpen}
             >
-              <Typography fontWeight={600}>All Categories</Typography>
             </Button>
 
             <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>

@@ -24,7 +24,7 @@ export default function WomenSection() {
   useEffect(() => {
     localStorage.setItem("wishlist", JSON.stringify(wishlist));
     getAllProductsWomenSection().then(setProducts);
-    
+
   }, [wishlist]);
 
   const filteredProducts =
@@ -95,22 +95,16 @@ export default function WomenSection() {
           </Box>
         </Box>
 
-        <Box sx={{ flex: 1, overflowY: "auto" ,p:4}}>
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", md: "repeat(4, 1fr)" },
-              gap: 3
-            }}
-          >
-                <Products 
-                setHovered={setHovered}
-                toggleWishlist={toggleWishlist}
-                hovered={hovered}
-                filteredProducts={filteredProducts}
-                wishlist={wishlist}
-                />
-          </Box>
+        <Box sx={{ flex: 1, overflowY: "auto", p: 4 }}>
+
+          <Products
+            setHovered={setHovered}
+            toggleWishlist={toggleWishlist}
+            hovered={hovered}
+            filteredProducts={filteredProducts}
+            wishlist={wishlist}
+          />
+
         </Box>
       </Box>
     </>

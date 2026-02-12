@@ -1,60 +1,60 @@
+
+const API = "https://fashion-eccomerce-web-server.vercel.app";
+
+
 export const getAllProductsWomenSection = async () => {
-  const res = await fetch("https://fashion-eccomerce-web-server.vercel.app/product?category=women");
+  const res = await fetch(`${API}/product?category=women`);
   return res.json();
 };
 export const getAllProductsMenSection = async () => {
-  const res = await fetch("https://fashion-eccomerce-web-server.vercel.app/product?category=men");
+  const res = await fetch(`${API}/product?category=men`);
   return res.json();
 };
 export const getAllProductsKidSection = async () => {
-  const res = await fetch("https://fashion-eccomerce-web-server.vercel.app/product?category=kid");
+  const res = await fetch(`${API}/product?category=kid`);
   return res.json();
 };
 export const getAllProducts = async () => {
-  const res = await fetch("https://fashion-eccomerce-web-server.vercel.app/product/All");
+  const res = await fetch(`${API}/product/All`);
   return res.json();
 };
 export const getProfile = async () => {
-  const data = JSON.parse(localStorage.getItem("user"));
-  console.log(data.token)
-  const res = await fetch("https://fashion-eccomerce-web-server.vercel.app/users/profile", {
-    headers: {
-      Authorization: `Bearer ${data.token}`
-    }
+  const res = await fetch(`${API}/users/profile`, {
+    credentials: "include"
   });
   return res.json();
 
 };
 export const updateProfile = async (formData) => {
-  const data = JSON.parse(localStorage.getItem("user"));
 
-  const res = await fetch("https://fashion-eccomerce-web-server.vercel.app/users/profile", {
+  const res = await fetch(`${API}/users/profile`, {
     method: "PUT",
-    headers: {
-      Authorization: `Bearer ${data.token}`,
-    },
+    credentials: "include",
     body: formData,
   });
-
   return res.json();
 };
 export const updateProduct = async (id, formData) => {
-  const data = JSON.parse(localStorage.getItem("user"));
 
-  const res = await fetch(`https://fashion-eccomerce-web-server.vercel.app/product/${id}`, {
+  const res = await fetch(`${API}/product/${id}`, {
     method: "PUT",
-    headers: {
-      Authorization: `Bearer ${data.token}`, 
-    },
+    credentials:"include",
     body: formData,
   });
 
   return res.json();
 };
 export const getProductById = async (id) => {
-  const res = await fetch(`https://fashion-eccomerce-web-server.vercel.app/product/${id}`);
+  const res = await fetch(`${API}/product/${id}`);
   return res.json();
 };
 
+export const postProduct = async(formData)=>{
+  await fetch(`${API}/product/add`, {
+      method: "POST",
+      credentials:"include",
+      body: formData,
+    });
+}
 
 

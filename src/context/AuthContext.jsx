@@ -17,7 +17,6 @@ export const AuthProvider = ({ children }) => {
   "user",
   JSON.stringify({
     user: userData.user,
-    token: userData.token,
   })
 );
     setUser(userData.user);
@@ -25,7 +24,6 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem("user");
-     localStorage.removeItem("token");
     setUser(null);
   };
 

@@ -10,6 +10,7 @@ import {
   FormControl,
   InputLabel,
 } from "@mui/material";
+import { postProduct } from "../services/api";
 
 export default function AddProduct() {
   const [product, setProduct] = useState({
@@ -42,16 +43,7 @@ export default function AddProduct() {
       formData.append("images", img);
     });
 
-    const data = JSON.parse(localStorage.getItem("user"));
-
-    await fetch("https://fashion-eccomerce-web-server.vercel.app/product/add", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${data.token}`,
-      },
-      body: formData,
-    });
-
+    postProduct(formData);
     alert("Product added successfully!");
   };
 

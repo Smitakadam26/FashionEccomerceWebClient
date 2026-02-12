@@ -47,8 +47,8 @@ const handleSubmit = async (e) => {
       alert(result.message || "Signup failed");
       return;
     }
-    login(result);       // ✅ pass object
-    navigate("/");            // ✅ go home
+    login(result);       
+    navigate("/");           
 
   } catch (err) {
     console.log(err);
@@ -56,11 +56,11 @@ const handleSubmit = async (e) => {
 };
 const handleLogin = async (e) => {
   e.preventDefault();
-
   try {
     const response = await fetch("https://fashion-eccomerce-web-server.vercel.app/signin", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials:"include",
       body: JSON.stringify({ email, password }),
     });
 
@@ -70,8 +70,8 @@ const handleLogin = async (e) => {
       alert(result.message || "Login failed");
       return;
     }
-    login(result);       // ✅ pass object
-    navigate("/");            // ✅ go home
+    login(result);       
+    navigate("/");           
 
   } catch (err) {
     console.log(err);
@@ -104,7 +104,7 @@ const handleLogin = async (e) => {
          Sign IN
         </Typography> 
           <Grid container spacing={2}>
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <TextField
                 fullWidth
                 label="Email"
@@ -114,7 +114,7 @@ const handleLogin = async (e) => {
               />
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <TextField
                 fullWidth
                 label="Password"
@@ -153,7 +153,7 @@ const handleLogin = async (e) => {
           Create Account
         </Typography> 
           <Grid container spacing={2}>
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <TextField
                 fullWidth
                 label="Name"
@@ -162,7 +162,7 @@ const handleLogin = async (e) => {
               />
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <TextField
                 fullWidth
                 label="Email"
@@ -172,7 +172,7 @@ const handleLogin = async (e) => {
               />
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <TextField
                 fullWidth
                 label="Password"
@@ -182,7 +182,7 @@ const handleLogin = async (e) => {
               />
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <TextField
                 fullWidth
                 label="Phone Number"
@@ -192,7 +192,7 @@ const handleLogin = async (e) => {
               />
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <TextField
                 fullWidth
                 label="Gender"
@@ -201,7 +201,7 @@ const handleLogin = async (e) => {
               />
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <TextField
                 fullWidth
                 label="Location"
