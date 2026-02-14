@@ -1,15 +1,5 @@
 import { useState } from "react";
-import {
-  Box,
-  TextField,
-  Button,
-  Typography,
-  Grid,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-} from "@mui/material";
+import {Box,TextField,Button,Typography,Grid,Select,MenuItem,FormControl,InputLabel} from "@mui/material";
 import { postProduct } from "../services/api";
 
 export default function AddProduct() {
@@ -43,10 +33,25 @@ export default function AddProduct() {
       formData.append("images", img);
     });
 
-    postProduct(formData);
-    alert("Product added successfully!");
-  };
+    try {
+  const res = await fetch("https://fashion-eccomerce-web-server.vercel.app/product/add", {
+    method: "POST",
+    body: formData,
+  });
 
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
+
+  console.log("Success:", data);
+} catch (err) {
+  console.error("Frontend Error:", err.message);
+}
+
+    alert("Product added successfully!");
+  }
   return (
     <Box>
       <Typography variant="h6" mb={3}>
@@ -97,7 +102,7 @@ export default function AddProduct() {
           </FormControl>
         </Grid>
 
-        <Grid item xs={12} md={6}>
+        {product.category === 'women' && (<Grid item xs={12} md={6}>
           <FormControl fullWidth>
             <InputLabel>Type</InputLabel>
             <Select name="type" value={product.type} label="Type" onChange={handleChange}>
@@ -108,7 +113,30 @@ export default function AddProduct() {
               <MenuItem value="bag">Bag</MenuItem>
             </Select>
           </FormControl>
-        </Grid>
+        </Grid>)}
+
+        {product.category === 'men' && (<Grid item xs={12} md={6}>
+          <FormControl fullWidth>
+            <InputLabel>Type</InputLabel>
+            <Select name="type" value={product.type} label="Type" onChange={handleChange}>
+              <MenuItem value="clothing">Clothing</MenuItem>
+              <MenuItem value="footwear">Footwear</MenuItem>
+              <MenuItem value="accessories">Accessories</MenuItem>
+              <MenuItem value="watches">Watches</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>)}
+        {product.category === 'kids' && (<Grid item xs={12} md={6}>
+          <FormControl fullWidth>
+            <InputLabel>Type</InputLabel>
+            <Select name="type" value={product.type} label="Type" onChange={handleChange}>
+              <MenuItem value="clothing">Clothing</MenuItem>
+              <MenuItem value="footwear">Footwear</MenuItem>
+              <MenuItem value="toys">Toys</MenuItem>
+              <MenuItem value="babycare">Babycare</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>)}
 
         <Grid item xs={12}>
           <input type="file" multiple onChange={(e) => setImages([...e.target.files])} />

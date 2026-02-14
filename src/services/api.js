@@ -1,7 +1,6 @@
 
 const API = "https://fashion-eccomerce-web-server.vercel.app";
-
-
+//const API = "http://localhost:5000"
 export const getAllProductsWomenSection = async () => {
   const res = await fetch(`${API}/product?category=women`);
   return res.json();

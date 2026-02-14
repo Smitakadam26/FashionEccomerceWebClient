@@ -1,9 +1,9 @@
-import {AppBar,Toolbar,Box,styled,InputBase,IconButton,Badge,Container,alpha,Stack,
-    useTheme,useMediaQuery
+import {
+    AppBar, Toolbar, Box, styled, InputBase, IconButton, Container, alpha, Stack,
+    useTheme, useMediaQuery
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
-import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import Navbar from "../components/Navbar";
 import Logo from '../assests/images/logo.png';
 import { useNavigate } from 'react-router-dom';
@@ -54,8 +54,8 @@ export default function Header() {
         if (user) {
             if (user.role === "admin") {
                 navigate("/admin");
-            } 
-            else{
+            }
+            else {
                 navigate("/Profile");
             }
         } else {
@@ -66,21 +66,35 @@ export default function Header() {
     return (
         <>
             <AppBar position="sticky" color="inherit" elevation={1}>
-                <Container maxWidth="lg" sx={{display: { xs: "flex", sm: "inline" }}}>
+                <Container maxWidth="lg" sx={{ display: { xs: "flex", sm: "inline" } }}>
                     <Toolbar
                         sx={{
-                            display: {xs:'inline',sm:"flex"},
+                            display: { xs: 'inline', sm: "flex" },
                             alignItems: 'center',
                             gap: 2
                         }}
                     >
 
-                        <Box sx={{ minWidth: 140 }}>
-                            <img src={Logo} alt="logo" height={70} />
+                        <Box sx={{ minWidth: 50 }}>
+                            <Box
+                                component="img"
+                                src={Logo}
+                                alt="logo"
+                                sx={{
+                                    height: {
+                                        xs: 40,   
+                                        sm: 50,  
+                                        md: 60,   
+                                        lg: 70   
+                                    },
+                                    width: "auto"
+                                }}
+                            />
                         </Box>
 
 
-                        <Box sx={{ flexGrow: 1, px: 2 }}>
+                        <Box sx={{ flexGrow: 1}} >
+                           
                             <Search sx={{ width: '100%', maxWidth: 600, mx: 'auto' }}>
                                 <SearchIconWrapper>
                                     <SearchIcon fontSize="small" />
@@ -91,32 +105,33 @@ export default function Header() {
                                 />
                             </Search>
                         </Box>
-
-
-                       {!isMobile && <Stack
+                        <Stack
                             direction="row"
                             spacing={2}
                             alignItems="center"
                             sx={{ minWidth: 200, justifyContent: 'flex-end' }}
                         >
+                            
+                            
+                             {!isMobile && <Box>
+                                <IconButton aria-label="account" onClick={handleClick}>
+                                    <PermIdentityOutlinedIcon />
+                                </IconButton>
+                            </Box>}
                             {/*<Typography
                                 variant="subtitle1"
                                 fontWeight={600}
                                 sx={{ display: { xs: 'none', md: 'block' } }}
                             >
                                 $3.69
-                            </Typography>*/}
-
-                            <IconButton aria-label="account" onClick={handleClick}>
-                                <PermIdentityOutlinedIcon />
-                            </IconButton>
+                            </Typography>*
 
                             <IconButton aria-label="cart">
                                 <Badge badgeContent={1} color="primary">
                                     <ShoppingBagOutlinedIcon />
                                 </Badge>
-                            </IconButton>
-                        </Stack>}
+                            </IconButton>*/}
+                        </Stack>
                     </Toolbar>
 
                     <Navbar />

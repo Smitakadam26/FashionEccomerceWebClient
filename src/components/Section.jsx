@@ -1,13 +1,15 @@
 import MenuIcon from "@mui/icons-material/Menu";
 import Products from "../components/Products";
 import { IconButton, Drawer, Box, Typography, useTheme, useMediaQuery } from "@mui/material";
-import { useState } from "react";
-
+import { useState,useEffect } from "react";
 export default function Section({Sidebar,filteredProducts,mobileOpen,setMobileOpen,category}) {
     const [hovered, setHovered] = useState(false);
     const [wishlist, setWishlist] = useState(
         JSON.parse(localStorage.getItem("wishlist")) || []
     );
+     useEffect(() => {
+        localStorage.setItem("wishlist", JSON.stringify(wishlist));
+      }, [wishlist]);
     const toggleWishlist = (product) => {
         const exists = wishlist.find((item) => item._id === product._id);
         exists
@@ -61,9 +63,7 @@ export default function Section({Sidebar,filteredProducts,mobileOpen,setMobileOp
             </Drawer>
 
             <Box sx={{
-                width: { xs: "100%", md: "75%" },
                 borderRadius: 3,
-                p: 2
             }}>
                 <Products
                     setHovered={setHovered}

@@ -8,7 +8,7 @@ import Section from "../components/Section";
 export default function MenSection() {
     const [products, setProducts] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState("all");
-    const wishlist = JSON.parse(localStorage.getItem("wishlist") || []);
+    const wishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
 
     useEffect(() => {
         localStorage.setItem("wishlist", JSON.stringify(wishlist));

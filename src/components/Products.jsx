@@ -14,7 +14,8 @@ export default function Products({ filteredProducts, setHovered, hovered, toggle
                     sm: "repeat(2, 1fr)",
                     md: "repeat(4, 1fr)"
                 },
-                gap: 3
+                gap: 3,
+                my:2
             }}
         >
             {

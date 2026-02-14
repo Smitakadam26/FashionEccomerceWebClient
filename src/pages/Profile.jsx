@@ -33,9 +33,9 @@ function InfoRow({ icon, label, value }) {
 function Orders() {
   return (
     <Box>
-      <Typography variant="h6" mb={2}>My Orders</Typography>
+      <Typography variant="h6" mt={2}>My Orders</Typography>
 
-      <Card sx={{ mb: 2 }}>
+      <Card sx={{ my: 2 }}>
         <CardContent>
           <Typography>Order </Typography>
           <Typography color="text.secondary">
@@ -61,9 +61,9 @@ function Orders() {
 function Addresses() {
   return (
     <Box>
-      <Typography variant="h6" mb={2}>Saved Addresses</Typography>
+      <Typography variant="h6" mt={2}>Saved Addresses</Typography>
 
-      <Card sx={{ mb: 2 }}>
+      <Card sx={{ my: 2 }}>
         <CardContent>
           <Typography>Home</Typography>
           <Typography color="text.secondary">
@@ -79,7 +79,7 @@ function Addresses() {
 function Security() {
   return (
     <Box>
-      <Typography variant="h6" mb={2}>Security Settings</Typography>
+      <Typography variant="h6" mt={2}>Security Settings</Typography>
 
       <Typography>Email Verified ✔</Typography>
 
@@ -105,7 +105,7 @@ function WishList() {
   const [hovered, setHovered] = useState(false);
   return (
     <Box>
-      <Typography variant="h6" mb={2}>
+      <Typography variant="h6" mt={2}>
         Wishlist
       </Typography>
 
@@ -148,8 +148,6 @@ function AccountInfo({ profile, onEdit }) {
           <Avatar
             src={profile.avatar}
             sx={{
-              width: 70,
-              height: 70,
               bgcolor: "white",
               color: "#ff6a6a",
               fontSize: 32,
@@ -215,7 +213,7 @@ export default function Profile() {
   }, []);
 
   return (
-        <Box sx={{ p: 4, minHeight: "100vh", display: "flex", gap: 3 }}>
+        <Box sx={{p:{md:4} ,minHeight: "100vh", display: "flex", gap: 3 }}>
 
       {isMobile && (
         <IconButton
