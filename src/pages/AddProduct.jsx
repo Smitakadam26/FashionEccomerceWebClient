@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {Box,TextField,Button,Typography,Grid,Select,MenuItem,FormControl,InputLabel} from "@mui/material";
-import { postProduct } from "../services/api";
+
 
 export default function AddProduct() {
   const [product, setProduct] = useState({
